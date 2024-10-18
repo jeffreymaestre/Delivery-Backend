@@ -22,6 +22,7 @@ RUTAS
  */
 const users = require('./routes/usersRoutes');
 const categories = require('./routes/categoriesRoutes');
+const products = require('./routes/productRoutes');
 
 const port = process.env.port || 3000;
 app.use(logger('dev'));
@@ -44,9 +45,10 @@ LLAMANDO A LAS RUTAS
 */
 users(app, upload);
 categories(app, upload);
+products(app, upload);
 
 
-server.listen(3000, '192.168.1.20' || 'localhost', function(){
+server.listen(3000, '192.168.1.103' || 'localhost', function(){
     console.log('Aplicacion de node.js ' + port + ' iniciando...')
 });
 

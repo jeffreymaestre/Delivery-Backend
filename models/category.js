@@ -25,7 +25,7 @@ Category.create = (category) => {
         created_at,
         updated_at
 )
-VALUES($1, $2, $3, $4) RETURNING ID
+VALUES($1, $2, $3, $4) RETURNING id
     `;
     return db.oneOrNone(sql, [
         category.name,
