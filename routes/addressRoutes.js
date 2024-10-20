@@ -3,7 +3,7 @@ const passport = require('passport');
 
 module.exports = (app) => {
     // Traer datos
-    //app.get('/api/categories/getAll',  passport.authenticate('jwt', {session: false}), CategoriesController.getAll);
+    app.get('/api/address/findByUser/:id_user',  passport.authenticate('jwt', {session: false}), AddressController.findByUser);
 
     //Guardar datos
     app.post('/api/address/create', passport.authenticate('jwt', {session: false}), AddressController.create);
