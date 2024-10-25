@@ -5,6 +5,7 @@ const Address = {};
 Address.findByUser = (id_user) => {
     const sql = `
     SELECT 
+            id,
  			id_user,
             address,
             neighborhood,

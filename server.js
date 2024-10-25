@@ -50,7 +50,7 @@ products(app, upload);
 address(app); //prueba
 
 
-server.listen(3000, '192.168.1.13' || 'localhost', function(){
+server.listen(3000, '192.168.1.2' || 'localhost', function(){
     console.log('Aplicacion de node.js ' + port + ' iniciando...')
 });
 
