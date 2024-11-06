@@ -1,12 +1,20 @@
 const Order = require('../models/order');
 const OrderHasProducts = require('../models/order_has_products');
+const timeRelative = require('../utils/time.relative');
 
 module.exports = {
 
     async findByStatus(req, res, next){
         try {
             const status = req.params.status;
-            const data = await Order.findByStatus(status);
+            let data = await Order.findByStatus(status);
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp)
+            });
+
+            console.log('Order: ', data);
+
             return res.status(201).json(data);
         } catch (error) {
             console.log(`Error ${error}`);
@@ -22,7 +30,14 @@ module.exports = {
         try {
             const status = req.params.status;
             const id_client = req.params.id_client;
-            const data = await Order.findByClientAndStatus(id_client, status);
+            let data = await Order.findByClientAndStatus(id_client, status);
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp)
+            });
+
+            console.log('Order: ', data);
+
             return res.status(201).json(data);
         } catch (error) {
             console.log(`Error ${error}`);

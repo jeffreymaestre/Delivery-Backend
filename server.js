@@ -52,7 +52,7 @@ address(app); //prueba
 orders(app); //prueba
 
 
-server.listen(3000, '192.168.1.4' || 'localhost', function(){
+server.listen(3000, '192.168.1.6' || 'localhost', function(){
     console.log('Aplicacion de node.js ' + port + ' iniciando...')
 });
 
