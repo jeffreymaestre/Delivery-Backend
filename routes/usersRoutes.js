@@ -4,6 +4,7 @@ const passport = require('passport');
 module.exports = (app, upload) => {
     // Traer datos
     app.get('/api/users/getAll', UsersController.getAll);
+    app.get('/api/users/findDeliveryMen', passport.authenticate('jwt', {session: false}),UsersController.findDeliveryMen);
 
     //Guardar datos
     app.post('/api/users/create', UsersController.register);
