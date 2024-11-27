@@ -25,11 +25,17 @@ Order.findByClientAndStatus = (id_client, status) => {
 		 )
 		) AS products,
         JSON_BUILD_OBJECT(
-            'id', u.id,
-            'name', u.name,
-            'lastname', u.lastname,
-            'image', u.image
+            'id', U.id,
+            'name', U.name,
+            'lastname', U.lastname,
+            'image', U.image
             ) AS client,
+			 JSON_BUILD_OBJECT(
+            'id', U2.id,
+            'name', U2.name,
+            'lastname', U2.lastname,
+            'image', U2.image
+            ) AS delivery,
          JSON_BUILD_OBJECT(
             'id', a.id,
             'address', a.address,
@@ -43,6 +49,10 @@ Order.findByClientAndStatus = (id_client, status) => {
         users AS U
     ON
         o.id_client = u.id
+	LEFT JOIN
+		users AS U2	
+	ON
+		o.id_delivery = U2.id
     INNER JOIN
         address AS a
     ON
@@ -59,9 +69,9 @@ Order.findByClientAndStatus = (id_client, status) => {
     WHERE
         o.id_client = $1 AND status = $2
 	GROUP BY
-	    o.id, U.id, a.id
+	    o.id, U.id, a.id, U2.id
     ORDER BY 
-        o.timestamp DESC;
+        o.timestamp DESC
     `;
 
     return db.manyOrNone(sql, [id_client, status]);
@@ -90,11 +100,17 @@ Order.findByStatus = (status) => {
 		 )
 		) AS products,
         JSON_BUILD_OBJECT(
-            'id', u.id,
-            'name', u.name,
-            'lastname', u.lastname,
-            'image', u.image
+            'id', U.id,
+            'name', U.name,
+            'lastname', U.lastname,
+            'image', U.image
             ) AS client,
+			 JSON_BUILD_OBJECT(
+            'id', U2.id,
+            'name', U2.name,
+            'lastname', U2.lastname,
+            'image', U2.image
+            ) AS delivery,
          JSON_BUILD_OBJECT(
             'id', a.id,
             'address', a.address,
@@ -108,6 +124,10 @@ Order.findByStatus = (status) => {
         users AS U
     ON
         o.id_client = u.id
+	LEFT JOIN
+		users AS U2	
+	ON
+		o.id_delivery = U2.id
     INNER JOIN
         address AS a
     ON
@@ -124,9 +144,9 @@ Order.findByStatus = (status) => {
     WHERE
         status = $1
 	GROUP BY
-	    o.id, U.id, a.id
+	    o.id, U.id, a.id, U2.id
     ORDER BY 
-        o.timestamp DESC;
+        o.timestamp DESC
     `;
 
     return db.manyOrNone(sql, status);
@@ -154,6 +174,29 @@ Order.create = (order) => {
         new Date(),
         new Date()
     ]);
+}
+
+Order.update = (order) => {
+    const sql = `
+    UPDATE
+        orders
+    SET
+        id_client = $2,
+        id_address = $3,
+        id_delivery = $4,
+        status = $5,
+        updated_at = $6
+    WHERE
+        id = $1
+        `;
+return db.none(sql, [
+    order.id,
+    order.id_client,
+    order.id_address,
+    order.id_delivery,
+    order.status,
+    new Date()
+]);
 }
 
 module.exports = Order;

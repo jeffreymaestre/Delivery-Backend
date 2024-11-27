@@ -75,5 +75,65 @@ module.exports = {
                 error: error
             });
         }
+    },
+
+    async updateToDispatched(req, res, next){
+        try {
+            let order = req.body;
+            order.status = 'DESPACHADO';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'La orden se actualizó correctamente'
+            });
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando la orden',
+                error: error
+            });
+        }
+    },
+
+    async updateToOnTheWay(req, res, next){
+        try {
+            let order = req.body;
+            order.status = 'EN CAMINO';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'La orden se actualizó correctamente'
+            });
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando la orden',
+                error: error
+            });
+        }
+    },
+
+    async updateToDelivery(req, res, next){
+        try {
+            let order = req.body;
+            order.status = 'ENTREGADO';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'La orden se actualizó correctamente'
+            });
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando la orden',
+                error: error
+            });
+        }
     }
 }

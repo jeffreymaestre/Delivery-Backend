@@ -11,6 +11,7 @@ module.exports = (app) => {
     //app.post('/api/users/login', UsersController.login);
 
     //Actualizar datos
-    //app.put('/api/users/update', passport.authenticate('jwt', {session: false}), upload.array('image', 1), UsersController.update);
-    //app.put('/api/users/updateWithoutImage', passport.authenticate('jwt', {session: false}), UsersController.updateWithoutImage);
+    app.put('/api/orders/updateToDispatched', passport.authenticate('jwt', {session: false}), OrderController.updateToDispatched);
+    app.put('/api/orders/updateToOnTheWay', passport.authenticate('jwt', {session: false}), OrderController.updateToOnTheWay);
+    app.put('/api/orders/updateToDelivery', passport.authenticate('jwt', {session: false}), OrderController.updateToDelivery);
 }
