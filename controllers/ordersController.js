@@ -49,6 +49,29 @@ module.exports = {
         }
     },
 
+    async findByDeliveryAndStatus(req, res, next){
+        try {
+            const status = req.params.status;
+            const id_delivery = req.params.id_delivery;
+            let data = await Order.findByDeliveryAndStatus(id_delivery, status);
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp)
+            });
+
+            console.log('Order: ', data);
+
+            return res.status(201).json(data);
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando las ordenes por estado',
+                error: error
+            });
+        }
+    },
+
 
     async create(req, res, next){
         try {
