@@ -158,5 +158,24 @@ module.exports = {
                 error: error
             });
         }
+    },
+
+    async updateLatLng(req, res, next){
+        try {
+            let order = req.body;
+            await Order.updateLatLng(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'La orden se actualizó correctamente'
+            });
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando la orden',
+                error: error
+            });
+        }
     }
 }
