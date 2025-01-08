@@ -58,10 +58,12 @@ LLAMAR A SOCKETS
 */
 ordersDeliverySocket(io);
 
-
-server.listen(3000, '192.168.56.1' || 'localhost', function(){
-    console.log('Aplicacion de node.js ' + port + ' iniciando...')
+server.listen(port, function(){
+    console.log('Listening on port ' + port + ' Iniciando...')
 });
+/*server.listen(3000, '192.168.56.1' || 'localhost', function(){
+    console.log('Aplicacion de node.js ' + port + ' iniciando...')
+});*/
 
 // ERROR HANDLER
 app.use((err, req, res, next) => {
