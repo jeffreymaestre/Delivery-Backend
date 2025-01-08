@@ -29,7 +29,7 @@ const products = require('./routes/productRoutes');
 const address = require('./routes/addressRoutes');
 const orders = require('./routes/ordersRoutes');
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
