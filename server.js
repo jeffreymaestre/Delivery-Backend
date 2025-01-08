@@ -8,6 +8,8 @@ const passport = require('passport');
 const multer = require('multer');
 const serviceAccount = require('./serviceAccountKey.json');
 const admin = require('firebase-admin');
+const io = require('socket.io')(server);
+const ordersDeliverySocket = require('./sockets/orders_delivery_socket');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -51,8 +53,13 @@ products(app, upload);
 address(app); //prueba
 orders(app); //prueba
 
+/*
+LLAMAR A SOCKETS
+*/
+ordersDeliverySocket(io);
 
-server.listen(3000, '192.168.1.6' || 'localhost', function(){
+
+server.listen(3000, '192.168.56.1' || 'localhost', function(){
     console.log('Aplicacion de node.js ' + port + ' iniciando...')
 });
 
