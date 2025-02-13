@@ -4,6 +4,31 @@ const timeRelative = require('../utils/time.relative');
 
 module.exports = {
 
+    //TEST PARA OBTENER EL TOTAL DEL DIA
+    async totalOrders(req, res, next){
+        try {
+            //const status = req.params.status;
+            let data = await Order.totalOrders();
+
+            /*data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), new Date(d.order_date).getTime());
+            });*/
+
+            console.log('Order: ', data[0]);
+
+            return res.status(201).json({success: true,
+                message: "Orden encontrada",
+                data: data[0]});
+        } catch (error) {
+            console.log(`Error ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error creando las ordenes por estado',
+                error: error
+            });
+        }
+    },
+
     async findByStatus(req, res, next){
         try {
             const status = req.params.status;

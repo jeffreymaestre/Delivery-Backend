@@ -152,6 +152,27 @@ Order.findByDeliveryAndStatus = (id_delivery, status) => {
     return db.manyOrNone(sql, [id_delivery, status]);
 }
 
+//TEST PARA OBTENER EL TOTAL DE ORDENES DEL DIA - LA SUMATORIA
+Order.totalOrders = (status) => {
+    const sql = 
+    `SELECT 
+    DATE(o.created_at) AS order_date,
+    SUM(p.price * ohp.quantity) AS total
+FROM 
+    orders o
+JOIN 
+    order_has_products ohp ON o.id = ohp.id_order
+JOIN 
+    products p ON ohp.id_product = p.id
+WHERE 
+    DATE(o.created_at) = CURRENT_DATE
+GROUP BY 
+    DATE(o.created_at);
+    `;
+
+    return db.manyOrNone(sql);
+}
+
 Order.findByStatus = (status) => {
     const sql = 
     `SELECT

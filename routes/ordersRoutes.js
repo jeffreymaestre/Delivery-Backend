@@ -16,4 +16,7 @@ module.exports = (app) => {
     app.put('/api/orders/updateToOnTheWay', passport.authenticate('jwt', {session: false}), OrderController.updateToOnTheWay);
     app.put('/api/orders/updateToDelivery', passport.authenticate('jwt', {session: false}), OrderController.updateToDelivery);
     app.put('/api/orders/updateLatLng', passport.authenticate('jwt', {session: false}), OrderController.updateLatLng);
+
+    //Consultar el total del dia
+    app.get('/api/orders/getAll', passport.authenticate('jwt', {session: false}), OrderController.totalOrders);
 }
